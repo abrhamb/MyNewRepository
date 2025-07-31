@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Marketing Platform Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1><i class="fas fa-chart-line"></i> E-Marketing Platform</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="dashboard-nav">
+            <ul class="nav-tabs">
+                <li class="nav-item active" data-tab="overview">
+                    <i class="fas fa-home"></i> Overview
+                </li>
+                <li class="nav-item" data-tab="campaigns">
+                    <i class="fas fa-envelope"></i> Campaigns
+                </li>
+                <li class="nav-item" data-tab="segments">
+                    <i class="fas fa-users"></i> Segments
+                </li>
+                <li class="nav-item" data-tab="templates">
+                    <i class="fas fa-file-alt"></i> Templates
+                </li>
+                <li class="nav-item" data-tab="analytics">
+                    <i class="fas fa-chart-bar"></i> Analytics
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon campaigns">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-campaigns">-</h3>
+                            <p>Total Campaigns</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon emails">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-emails">-</h3>
+                            <p>Emails Sent</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon open-rate">
+                            <i class="fas fa-envelope-open"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="open-rate">-</h3>
+                            <p>Open Rate</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="total-revenue">-</h3>
+                            <p>Total Revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Campaign Performance</h3>
+                        <canvas id="campaignChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Engagement Trends</h3>
+                        <canvas id="engagementChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaigns Tab -->
+            <div id="campaigns" class="tab-content">
+                <div class="section-header">
+                    <h2>Email Campaigns</h2>
+                    <button class="btn btn-primary" onclick="createCampaign()">
+                        <i class="fas fa-plus"></i> New Campaign
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="campaigns-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Sent</th>
+                                <th>Opens</th>
+                                <th>Clicks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Segments Tab -->
+            <div id="segments" class="tab-content">
+                <div class="section-header">
+                    <h2>Customer Segments</h2>
+                    <button class="btn btn-primary" onclick="createSegment()">
+                        <i class="fas fa-plus"></i> New Segment
+                    </button>
+                </div>
+                <div class="segments-grid" id="segments-grid"></div>
+            </div>
+
+            <!-- Templates Tab -->
+            <div id="templates" class="tab-content">
+                <div class="section-header">
+                    <h2>Email Templates</h2>
+                    <button class="btn btn-primary" onclick="createTemplate()">
+                        <i class="fas fa-plus"></i> New Template
+                    </button>
+                </div>
+                <div class="templates-grid" id="templates-grid"></div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="analytics" class="tab-content">
+                <div class="analytics-section">
+                    <h2>Detailed Analytics</h2>
+                    <div class="analytics-filters">
+                        <select id="period-select" onchange="updateAnalytics()">
+                            <option value="7days">Last 7 Days</option>
+                            <option value="30days" selected>Last 30 Days</option>
+                            <option value="90days">Last 90 Days</option>
+                        </select>
+                    </div>
+                    <div class="analytics-charts">
+                        <div class="chart-container">
+                            <h3>Revenue Trends</h3>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Segment Performance</h3>
+                            <canvas id="segmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
